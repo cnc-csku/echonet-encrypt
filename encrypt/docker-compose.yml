@@ -1,0 +1,8 @@
+version: '3'
+services:
+  receiver:
+    build: ./receiver
+  sender:
+    build: ./sender
+    depends_on:
+      - receiver
