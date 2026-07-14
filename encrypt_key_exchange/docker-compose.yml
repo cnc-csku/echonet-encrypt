@@ -1,0 +1,17 @@
+services:
+  receiver:
+    build: ./receiver
+    restart: always 
+
+  sender:
+    build: ./sender
+    depends_on:
+      receiver:
+        condition: service_started
+
+  sniffer:
+    image: nicolaka/netshoot
+    network_mode: "service:receiver"
+    depends_on:
+      - receiver
+    command: tcpdump -i any port 5000 -X
