@@ -1,0 +1,25 @@
+version: '3'
+services:
+  sender:
+    build: ./sender
+    container_name: floor_lamp-1
+    depends_on:
+      - receiver
+    networks:
+      echonet-network:
+        aliases:
+          - floor_lamp
+    ports:
+      - "3610:3610/udp"
+
+  receiver:
+    build: ./receiver
+    networks:
+      - echonet-network
+      - private-iot-network
+
+networks:
+  echonet-network:
+    external: true
+  private-iot-network:
+    external: true
